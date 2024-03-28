@@ -6,3 +6,7 @@ interface ServerTypes {
     password: string,
     privateKey: string
 }
+
+interface ServerList {
+    [codename: string]: ServerTypes
+}

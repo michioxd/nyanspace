@@ -1,4 +1,4 @@
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { StyleSheet, View } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
@@ -9,10 +9,17 @@ import { goBack } from "../utils/navigate";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { LISTING_KEY } from "../utils/def";
 
-export default function ScreenAddServer() {
+//@ts-expect-error bruh
+export default function ScreenAddServer({ route, navigation }) {
     const { t } = useTranslation();
     const snackbar = useSnackbar();
 
+    let editData: [string, ServerTypes];
+    if (route.params) {
+        const { serverEditData } = route.params;
+        editData = serverEditData;
+    }
+    const [isEdit, setIsEdit] = useState(false);
     const [serverName, setServerName] = useState("");
     const [serverAddress, setServerAddress] = useState("");
     const [serverPort, setServerPort] = useState(22);
@@ -20,6 +27,8 @@ export default function ScreenAddServer() {
     const [serverPassword, setServerPassword] = useState("");
     const [privateKey, setPrivateKey] = useState("");
     const [isLoading, setIsLoading] = useState(false);
+
+    const serverCodename = useMemo(() => serverName.normalize("NFD").replace(/[^A-Za-z0-9]/g, ""), [serverName]);
 
     const checkInput = useCallback(() => {
         const hasEmptyStringInput = [serverName, serverAddress, serverUsername]
@@ -61,7 +70,7 @@ export default function ScreenAddServer() {
             }
             console.log(`Trying to execute command...`);
             const res = await client.execute("echo \"OK\"");
-            console.log(res);
+            console.log(res.trim());
             if (res.trim() == "OK") {
                 snackbar?.show({ content: t('test_connection_successful') + ` (${Date.now() - time} ms)` })
             } else {
@@ -82,11 +91,26 @@ export default function ScreenAddServer() {
         setIsLoading(true);
         try {
             const lastData = await AsyncStorage.getItem(LISTING_KEY);
-            let data: ServerTypes[] = JSON.parse(lastData ?? "[]") ?? [];
+            let data: ServerList = JSON.parse(lastData ?? "{}") ?? {};
 
-            data = [
-                ...data,
-                {
+            if (isEdit) {
+                if (!data[editData[0]]) return;
+
+                data[editData[0]] = {
+                    name: serverName,
+                    address: serverAddress,
+                    password: serverPassword,
+                    username: serverUsername,
+                    port: serverPort,
+                    privateKey: privateKey
+                };
+            } else {
+                if (data[serverCodename]) {
+                    snackbar?.show({ content: t('server_name_existed') });
+                    return;
+                }
+
+                data[serverCodename] = {
                     name: serverName,
                     address: serverAddress,
                     password: serverPassword,
@@ -94,13 +118,31 @@ export default function ScreenAddServer() {
                     port: serverPort,
                     privateKey: privateKey
                 }
-            ];
+            }
+
             await AsyncStorage.setItem(LISTING_KEY, JSON.stringify(data));
-        } catch (e) { }
-        finally {
             goBack();
+        } catch (e) {
+            snackbar?.show({ content: t(isEdit ? 'cannot_edit_server' : 'cannot_add_server') });
+        } finally {
+            setIsLoading(false);
         }
-    }, [serverName, serverAddress, serverPassword, serverPort, serverUsername, privateKey]);
+    }, [isEdit, serverName, serverAddress, serverPassword, serverPort, serverUsername, privateKey]);
+
+    useEffect(() => {
+        if (editData) {
+            const d = editData[1];
+            setPrivateKey(d.privateKey);
+            setServerAddress(d.address);
+            setServerName(d.name);
+            setServerPassword(d.password);
+            setServerPort(d.port);
+            setServerUsername(d.username);
+            setIsEdit(true);
+
+            navigation.setOptions({ title: t('edit_server') })
+        }
+    }, []);
 
     return (
         <>
@@ -202,8 +244,8 @@ export default function ScreenAddServer() {
                         {t('test_connection')}
                     </Button>
 
-                    <Button style={{ marginBottom: 8, marginTop: 8 }} mode="contained-tonal" onPress={handleAddServer}>
-                        {t('add_server')}
+                    <Button disabled={isLoading} loading={isLoading} style={{ marginBottom: 8, marginTop: 8 }} mode="contained-tonal" onPress={handleAddServer}>
+                        {t(isEdit ? 'edit_server' : 'add_server')}
                     </Button>
                 </View>
 

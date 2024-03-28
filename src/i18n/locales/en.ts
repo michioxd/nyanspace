@@ -18,6 +18,7 @@ const locale: ResourceLanguage = {
         "no_server_selected": "No server selected!",
         "select_or_add_a_server": "Select or add a server",
         "add_server": "Add server",
+        "edit_server": "Edit server",
         "add_server_notice": "Make sure your server supported SSH and running GNU Bash or zsh. Currently we only support Bash and zsh.",
         "server_name": "Server name",
         "server_address": "Address",
@@ -31,7 +32,22 @@ const locale: ResourceLanguage = {
         "port_invalid_range": "Invalid port (0 to 65535)",
         "test_connection_successful": "Test connection successful",
         "test_connection_error": "Cannot connect to server.",
-        "test_connection_error_execute_command": "Cannot execute command on this server."
+        "test_connection_error_execute_command": "Cannot execute command on this server.",
+        "none": "None",
+        "invalid_saved_server": "Invalid selected server!",
+        "cannot_connect_to_server": "Cannot connect to this server!",
+        "hold_an_item_to_delete": "Hold any item to delete.",
+        "ok": "OK",
+        "cancel": "Cancel",
+        "confirm": "Confirm",
+        "delete_this_server": "Delete this server",
+        "delete_this_server_desc": "Do you want to delete this server? This action cannot be undone.",
+        "deleted_server": "Deleted server!",
+        "cannot_delete_server": "Cannot delete this server, please try again!",
+        "server_name_existed": "This server name is existed, please choose another name!",
+        "cannot_add_server": "Cannot add this server, please try again!",
+        "cannot_edit_server": "Cannot edit this server, please try again!",
+        "connecting": "Connecting to server..."
     }
 }
 

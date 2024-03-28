@@ -18,6 +18,7 @@ const locale: ResourceLanguage = {
         "no_server_selected": "Chưa chọn máy chủ!",
         "select_or_add_a_server": "Chọn hoặc thêm một máy chủ",
         "add_server": "Thêm máy chủ",
+        "edit_server": "Chỉnh sửa máy chủ",
         "add_server_notice": "Hãy chắc chắn máy chủ của bạn có SSH và đang sử dụng GNU Bash hoặc zsh. Hiện tại chỉ đang hỗ trợ Bash và zsh.",
         "server_name": "Tên máy chủ",
         "server_address": "Địa chỉ",
@@ -31,7 +32,22 @@ const locale: ResourceLanguage = {
         "port_invalid_range": "Cổng không đúng định dạng (0 đến 65535)",
         "test_connection_successful": "Kiểm tra kết nối thành công",
         "test_connection_error": "Không thể kết nối tới server.",
-        "test_connection_error_execute_command": "Không thể thực thi lệnh trên server này."
+        "test_connection_error_execute_command": "Không thể thực thi lệnh trên server này.",
+        "none": "Không",
+        "invalid_saved_server": "Máy chủ đã lựa chọn không hợp lệ",
+        "cannot_connect_to_server": "Không thể kết nối tới máy chủ này!",
+        "hold_an_item_to_delete": "Giữ một mục bất kỳ để xoá.",
+        "ok": "OK",
+        "cancel": "Huỷ",
+        "confirm": "Xác nhận",
+        "delete_this_server": "Xoá server",
+        "delete_this_server_desc": "Bạn có muốn xoá server này không? Hành động này không thể được hoàn tác.",
+        "deleted_server": "Đã xoá server!",
+        "cannot_delete_server": "Không thể xoá server này, vui lòng thử lại!",
+        "server_name_existed": "Tên máy chủ này đã tồn tại, vui lòng đặt tên khác!",
+        "cannot_add_server": "Không thể thêm server, vui lòng thử lại",
+        "cannot_edit_server": "Không thể chỉnh sửa server, vui lòng thử lại!",
+        "connecting": "Đang kết nối tới server..."
     }
 }
 

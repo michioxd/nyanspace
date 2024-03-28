@@ -1,8 +1,8 @@
 import { useMaterial3Theme } from '@pchmn/expo-material3-theme';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { StatusBar } from 'expo-status-bar';
-import { createContext, useEffect, useMemo, useState } from 'react';
-import { Appearance, useColorScheme } from 'react-native';
+import { useEffect, useMemo, useState } from 'react';
+import { Appearance } from 'react-native';
 import { adaptNavigationTheme, MD3DarkTheme, MD3LightTheme, PaperProvider } from 'react-native-paper';
 import { PERSISTENCE_KEY, PREFERENCES_KEY, UserThemeType } from './utils/def';
 import {
@@ -17,6 +17,8 @@ import i18n from './i18n';
 import { ConfigurationContext } from './context/Configuration';
 import Root from './root';
 import SnackbarContainer from './components/SnackbarAPI';
+import { DialogProvider } from './context/DialogProvider';
+import ConnectorContainer from './components/Connector';
 
 export default function App() {
 
@@ -107,9 +109,13 @@ export default function App() {
                             AsyncStorage.setItem(PERSISTENCE_KEY, JSON.stringify(state))
                         }
                     >
-                        <SnackbarContainer>
-                            <Root />
-                        </SnackbarContainer>
+                        <ConnectorContainer>
+                            <SnackbarContainer>
+                                <DialogProvider>
+                                    <Root />
+                                </DialogProvider>
+                            </SnackbarContainer>
+                        </ConnectorContainer>
                     </NavigationContainer>
                 </ConfigurationContext.Provider>
             </PaperProvider>

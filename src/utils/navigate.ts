@@ -12,3 +12,7 @@ export function navigate(name: string, params?: any) {
 export function goBack() {
     navigationRef.goBack();
 }
+
+export function useNavigation() {
+    return navigationRef;
+}
