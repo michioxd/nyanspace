@@ -6,7 +6,7 @@ import { View } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 import { List, RadioButton } from "react-native-paper";
 import { STORE_LANGUAGE_KEY } from "../utils/def";
-import { SupportedLanguage } from "../i18n/resources";
+import { allLanguageList, SupportedLanguage } from "../i18n/resources";
 import useFirstRender from "../hooks/firstRender";
 import useDidMountEffect from "../hooks/firstRender";
 
@@ -43,7 +43,8 @@ export default function ScreenSelectLanguage() {
                 <ScrollView style={{ width: '100%', height: '100%' }}>
                     <List.Section>
                         <List.Item
-                            title={t('language_same_as_device') + ` (${Localization.getLocales()[0].languageCode})`}
+                            title={t('language_same_as_device')}
+                            description={`${allLanguageList[Localization.getLocales()[0].languageCode ?? "en"]} ${(!SupportedLanguage[Localization.getLocales()[0].languageCode ?? "en"] ? "(" + t('not_supported') + ")" : "")}`}
                             onPress={() => setCurrentLanguage('SYSTEM')}
                             right={(props) => <RadioButton
                                 status={currentLanguage === "SYSTEM" ? "checked" : 'unchecked'}

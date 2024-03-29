@@ -9,6 +9,7 @@ const locale: ResourceLanguage = {
         "theme_dark": "Tối",
         "general": "Chung",
         "language": "Ngôn ngữ",
+        "not_supported": "Không được hỗ trợ",
         "current_language": "Ngôn ngữ hiện tại: ",
         "language_same_as_device": "Theo thiết bị",
         "home": "Trang chủ",
@@ -47,7 +48,14 @@ const locale: ResourceLanguage = {
         "server_name_existed": "Tên máy chủ này đã tồn tại, vui lòng đặt tên khác!",
         "cannot_add_server": "Không thể thêm server, vui lòng thử lại",
         "cannot_edit_server": "Không thể chỉnh sửa server, vui lòng thử lại!",
-        "connecting": "Đang kết nối tới server..."
+        "connecting": "Đang kết nối tới server...",
+        "dashboard": "Chính",
+        "cpu": "CPU",
+        "storage": "Bộ nhớ",
+        "temperature": "Nhiệt độ",
+        "network": "Mạng",
+        "summary": "Tóm tắt",
+        "ram": "RAM",
     }
 }
 

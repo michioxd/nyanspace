@@ -9,6 +9,7 @@ const locale: ResourceLanguage = {
         "theme_dark": "Dark",
         "general": "General",
         "language": "Language",
+        "not_supported": "Not supported",
         "current_language": "Current language: ",
         "language_same_as_device": "Same as device",
         "home": "Home",
@@ -47,7 +48,14 @@ const locale: ResourceLanguage = {
         "server_name_existed": "This server name is existed, please choose another name!",
         "cannot_add_server": "Cannot add this server, please try again!",
         "cannot_edit_server": "Cannot edit this server, please try again!",
-        "connecting": "Connecting to server..."
+        "connecting": "Connecting to server...",
+        "dashboard": "Dashboard",
+        "cpu": "CPU",
+        "storage": "Storage",
+        "temperature": "Temperature",
+        "network": "Network",
+        "summary": "Summary",
+        "ram": "RAM",
     }
 }
 
