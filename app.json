@@ -4,11 +4,8 @@
     "slug": "nyanspace",
     "version": "0.1-cuttingedge.180029032024",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
-    "userInterfaceStyle": "light",
-    "splash": {
-      "backgroundColor": "#ffffff"
-    },
+    "icon": "./src/assets/app/icon.png",
+    "userInterfaceStyle": "automatic",
     "assetBundlePatterns": [
       "**/*"
     ],
@@ -17,10 +14,10 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
+        "foregroundImage": "./src/assets/app/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "versionCode": 2,
+      "versionCode": 4,
       "package": "ch.michioxd.nyanspace"
     },
     "plugins": [
