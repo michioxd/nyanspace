@@ -2,13 +2,11 @@
   "expo": {
     "name": "nyanspace",
     "slug": "nyanspace",
-    "version": "1.0.0",
+    "version": "0.1-cuttingedge.180029032024",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
     "splash": {
-      "image": "./assets/splash.png",
-      "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
     "assetBundlePatterns": [
@@ -23,9 +21,6 @@
         "backgroundColor": "#ffffff"
       },
       "package": "ch.michioxd.nyanspace"
-    },
-    "web": {
-      "favicon": "./assets/favicon.png"
     },
     "plugins": [
       "expo-localization"
