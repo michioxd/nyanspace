@@ -56,6 +56,8 @@ const locale: ResourceLanguage = {
         "network": "Network",
         "summary": "Summary",
         "ram": "RAM",
+        "about": "About",
+        "version": "Version"
     }
 }
 

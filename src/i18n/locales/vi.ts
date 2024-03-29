@@ -56,6 +56,8 @@ const locale: ResourceLanguage = {
         "network": "Mạng",
         "summary": "Tóm tắt",
         "ram": "RAM",
+        "about": "Giới thiệu",
+        "version": "Phiên bản"
     }
 }
 

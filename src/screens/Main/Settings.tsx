@@ -1,5 +1,7 @@
 import { Header } from "@react-navigation/elements";
 import { View } from "react-native";
+import * as Linking from 'expo-linking';
+import * as Application from 'expo-application';
 import { List, RadioButton, Text, useTheme } from "react-native-paper";
 import { UserThemeType } from "../../utils/def";
 import { useContext, useEffect, useState } from "react";
@@ -57,6 +59,19 @@ export default function ScreenMainSettings() {
                             left={(props) => <List.Icon {...props} icon="translate" />}
                             onPress={() => navigate("SelectLanguage")}
                         />
+                        <List.Subheader>{t('about')}</List.Subheader>
+                        <List.Item
+                            title={t('version')}
+                            description={Application.nativeApplicationVersion}
+                            left={(props) => <List.Icon {...props} icon="information" />}
+                        />
+                        <List.Item
+                            title={t('GitHub')}
+                            description={"https://github.com/michioxd/nyanspace"}
+                            onPress={() => Linking.openURL("https://github.com/michioxd/nyanspace")}
+                            left={(props) => <List.Icon {...props} icon="github" />}
+                        />
+                        <Text style={{ color: 'gray', marginLeft: 16 }} variant="labelSmall">From neko with love by michioxd and all contributors!</Text>
                     </List.Section>
                 </ScrollView>
             </View>

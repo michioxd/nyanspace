@@ -20,10 +20,16 @@
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
+      "versionCode": 2,
       "package": "ch.michioxd.nyanspace"
     },
     "plugins": [
       "expo-localization"
-    ]
+    ],
+    "extra": {
+      "eas": {
+        "projectId": "2d5e309a-efc4-49b2-b52d-18d95431f964"
+      }
+    }
   }
 }

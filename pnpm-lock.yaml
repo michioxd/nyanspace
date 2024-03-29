@@ -35,6 +35,15 @@ dependencies:
   expo:
     specifier: ~50.0.14
     version: 50.0.14(@babel/core@7.24.3)(@react-native/babel-preset@0.73.21)
+  expo-application:
+    specifier: ~5.8.3
+    version: 5.8.3(expo@50.0.14)
+  expo-constants:
+    specifier: ~15.4.5
+    version: 15.4.5(expo@50.0.14)
+  expo-linking:
+    specifier: ~6.2.2
+    version: 6.2.2(expo@50.0.14)
   expo-localization:
     specifier: ~14.8.3
     version: 14.8.3(expo@50.0.14)
@@ -3831,6 +3840,14 @@ packages:
       strip-final-newline: 2.0.0
     dev: false
 
+  /expo-application@5.8.3(expo@50.0.14):
+    resolution: {integrity: sha512-IISxzpPX+Xe4ynnwX8yY52T6dm1g9sME1GCj4lvUlrdc5xeTPM6U35x7Wj82V7lLWBaVGe+/Tg9EeKqfylCEwA==}
+    peerDependencies:
+      expo: '*'
+    dependencies:
+      expo: 50.0.14(@babel/core@7.24.3)(@react-native/babel-preset@0.73.21)
+    dev: false
+
   /expo-asset@9.0.2(expo@50.0.14):
     resolution: {integrity: sha512-PzYKME1MgUOoUvwtdzhAyXkjXOXGiSYqGKG/MsXwWr0Ef5wlBaBm2DCO9V6KYbng5tBPFu6hTjoRNil1tBOSow==}
     dependencies:
@@ -3879,6 +3896,16 @@ packages:
       expo: '*'
     dependencies:
       expo: 50.0.14(@babel/core@7.24.3)(@react-native/babel-preset@0.73.21)
+    dev: false
+
+  /expo-linking@6.2.2(expo@50.0.14):
+    resolution: {integrity: sha512-FEe6lP4f7xFT/vjoHRG+tt6EPVtkEGaWNK1smpaUevmNdyCJKqW0PDB8o8sfG6y7fly8ULe8qg3HhKh5J7aqUQ==}
+    dependencies:
+      expo-constants: 15.4.5(expo@50.0.14)
+      invariant: 2.2.4
+    transitivePeerDependencies:
+      - expo
+      - supports-color
     dev: false
 
   /expo-localization@14.8.3(expo@50.0.14):
