@@ -20,7 +20,7 @@ const locale: ResourceLanguage = {
         "select_or_add_a_server": "Select or add a server",
         "add_server": "Add server",
         "edit_server": "Edit server",
-        "add_server_notice": "Make sure your server supported SSH and running GNU Bash or zsh. Currently we only support Bash and zsh.",
+        "add_server_notice": "Make sure your server supported SSH and running GNU Bash. Currently we only support Bash.",
         "server_name": "Server name",
         "server_address": "Address",
         "server_port": "Port",
@@ -57,7 +57,16 @@ const locale: ResourceLanguage = {
         "summary": "Summary",
         "ram": "RAM",
         "about": "About",
-        "version": "Version"
+        "version": "Version",
+        "shell_not_supported": "Shell not supported, we only support Bash",
+        "files": "Files",
+        "name": "Name",
+        "cpu_clock": "CPU clock",
+        "architecture": "Architecture",
+        "cache_size": "Cache size",
+        "logical_cores": "Logical cores",
+        "physical_cores": "Physical cores",
+        "flags": "Flags",
     }
 }
 

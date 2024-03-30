@@ -51,6 +51,7 @@ export interface SystemStats {
 }
 
 export interface Temperature {
+    name: string;
     component: string;
     temperature: number;
 }

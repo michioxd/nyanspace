@@ -16,7 +16,7 @@ fs.readFile("./src/misc/nyanspace.sh", 'utf8', (err, content) => {
         .replace(/\"/g, '\\\"')
         .replace(/\\\"/g, '\\\\\\"')
 
-    escapedContent = `export const initialCommand: string = String.raw\` mkdir ~/.nyanspace | printf "${escapedContent}" > ~/.nyanspace/.nyanspace.sh | chmod +x ~/.nyanspace/.nyanspace.sh\``;
+    escapedContent = `export const initialCommand: string = String.raw\` mkdir -p ~/.nyanspace | printf "${escapedContent}" > ~/.nyanspace/.nyanspace.sh | chmod +x ~/.nyanspace/.nyanspace.sh\``;
 
     fs.writeFile("./src/utils/initialCommand.ts", escapedContent, err => {
         if (err) {

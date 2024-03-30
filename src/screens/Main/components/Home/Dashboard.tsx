@@ -68,13 +68,10 @@ export default function HomeDashboard({ d }: { d: ServerStats }) {
             <Text variant="titleLarge">{d.hostname}</Text>
             <Text variant="titleSmall" style={{ color: "gray" }}>{d.distro_name + " " + d.distro_version}</Text>
             <View style={{ flex: 1, marginTop: 10, marginBottom: 30, flexDirection: 'row', flexWrap: 'wrap' }}>
-                <CircleItem primaryText={t('cpu')} color="#117dbb" icon="memory" percent={Math.ceil(d.stats.cpu_usage)} />
-                <CircleItem primaryText={t('ram')} color="#b01eae" icon="chip" percent={Math.ceil(d.stats.mem_used / d.stats.mem_total * 100)} secondText={formatData(d.stats.mem_used, true) + "/" + formatData(d.stats.mem_total, true)} />
-                {d.temperatures.map((d, i) => (
-                    <CircleItem key={i} primaryText={t('temperature')} color={d.temperature < 65 ? "#2bb324" : d.temperature < 85 ? "#b37c24" : "#b32424"} icon="coolant-temperature" percent={d.temperature / 100 * 100} customValue="℃" secondText={d.component === "hwmon0" ? "CPU" : d.component === "hwmon1" ? "GPU" : d.component} />
-                ))}
+                <CircleItem primaryText={t('cpu')} color="#117dbb" icon="memory" percent={Math.round(d.stats.cpu_usage)} />
+                <CircleItem primaryText={t('ram')} color="#b01eae" icon="chip" percent={Math.round(d.stats.mem_used / d.stats.mem_total * 100)} secondText={formatData(d.stats.mem_used, true) + "/" + formatData(d.stats.mem_total, true)} />
                 {d.partitions.filter(d => d.target == "/" || d.source.startsWith("/dev/sd")).map((d, i) => (
-                    <CircleItem key={i} color="#00b884" primaryText={d.source} icon="harddisk" percent={Math.ceil(d.used / d.size * 100)} secondText={formatData(d.used) + "/" + formatData(d.size)} />
+                    <CircleItem key={i} color="#00b884" primaryText={d.source} icon="harddisk" percent={Math.round(d.used / d.size * 100)} secondText={formatData(d.used) + "/" + formatData(d.size)} />
                 ))}
                 <SurfaceItem>
                     <Text style={{ marginBottom: 8 }} variant="titleSmall">{t('network')}</Text>
@@ -87,6 +84,9 @@ export default function HomeDashboard({ d }: { d: ServerStats }) {
                         <Text variant="bodyMedium">RX: {formatData(networkState.downAvg)}</Text>
                     </View>
                 </SurfaceItem>
+                {d.temperatures.map((d, i) => (
+                    <CircleItem key={i} primaryText={t('temperature')} color={d.temperature < 65 ? "#2bb324" : d.temperature < 85 ? "#b37c24" : "#b32424"} icon="coolant-temperature" percent={Math.round(d.temperature / 100 * 100)} customValue="℃" secondText={d.name} />
+                ))}
             </View>
         </View>
     )

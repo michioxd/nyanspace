@@ -22,8 +22,8 @@ export default function ScreenMain() {
                 focusedIcon: 'home',
             },
             {
-                key: 'sftp',
-                title: t('sftp'),
+                key: 'filemanager',
+                title: t('files'),
                 focusedIcon: 'folder',
             },
             {

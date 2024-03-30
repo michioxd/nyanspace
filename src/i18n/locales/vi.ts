@@ -57,7 +57,16 @@ const locale: ResourceLanguage = {
         "summary": "Tóm tắt",
         "ram": "RAM",
         "about": "Giới thiệu",
-        "version": "Phiên bản"
+        "version": "Phiên bản",
+        "shell_not_supported": "Shell không được hỗ trợ, hiện tại chỉ hỗ trợ Bash",
+        "files": "Tệp",
+        "name": "Tên",
+        "cpu_clock": "Tốc độ CPU",
+        "architecture": "Kiến trúc",
+        "cache_size": "Kích thước bộ nhớ đệm",
+        "logical_cores": "Lõi logic",
+        "physical_cores": "Lõi vật lý",
+        "flags": "Cờ"
     }
 }
 

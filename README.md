@@ -1,9 +1,9 @@
 > [!WARNING]  
-> Project still in development. Use at your own risk!
+> Project still in development (and in cutting-edge state). Use at your own risk!
 
 # nyanspace
 
-An Android app to manage your Linux Server via SSH. No need to install anything (eg. endpoint api,...) on your server.
+An Android app to manage your Linux server via SSH. There is no need to install anything (e.g., endpoint api, etc.) on your server.
 
 ## Feature
 

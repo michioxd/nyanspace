@@ -18,9 +18,19 @@ export default function ConnectorContainer({ children }: { children: ReactNode }
     useEffect(() => {
         (async () => {
             const lastData = await AsyncStorage.getItem(SELECTED_KEY);
-            setServerSelected(lastData === nulledServerSelect ? "null" : lastData);
+            setServerSelected(lastData === nulledServerSelect ? null : lastData);
         })();
     }, []);
+
+    const closeClient = useCallback(() => {
+        if (client.current !== null) {
+            client.current.closeShell();
+            client.current.disconnect();
+            client.current = null;
+
+        }
+        setConnected(false);
+    }, [client.current]);
 
     useEffect(() => {
         (async () => {
@@ -55,6 +65,14 @@ export default function ConnectorContainer({ children }: { children: ReactNode }
                             selected.password
                         )
                     }
+                    console.log("Connected to " + selected.address);
+                    const checkShell = await client.current.execute(`echo $0`);
+                    console.log(checkShell);
+                    if (/bash/g.test(checkShell) === false) {
+                        snackbar?.show({ content: t('shell_not_supported') + ` (yourShell: ${checkShell.trim()})` });
+                        setServerSelected(null);
+                        return;
+                    }
                     await client.current.startShell(PtyType.VANILLA);
                     await client.current.execute(initialCommand);
                     setConnected(true);
@@ -78,12 +96,13 @@ export default function ConnectorContainer({ children }: { children: ReactNode }
 
             }
         })();
-    }, [serverSelected, client]);
+    }, [serverSelected]);
 
     const exportValue = {
         client: client.current,
         connected: connected,
         connecting: connecting,
+        closeClient: closeClient,
         serverSelected: serverSelected,
         setServerSelected: setServerSelected
     }

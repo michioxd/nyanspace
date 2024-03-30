@@ -109,13 +109,13 @@ export default function App() {
                             AsyncStorage.setItem(PERSISTENCE_KEY, JSON.stringify(state))
                         }
                     >
-                        <ConnectorContainer>
-                            <SnackbarContainer>
-                                <DialogProvider>
+                        <SnackbarContainer>
+                            <DialogProvider>
+                                <ConnectorContainer>
                                     <Root />
-                                </DialogProvider>
-                            </SnackbarContainer>
-                        </ConnectorContainer>
+                                </ConnectorContainer>
+                            </DialogProvider>
+                        </SnackbarContainer>
                     </NavigationContainer>
                 </ConfigurationContext.Provider>
             </PaperProvider>
