@@ -30,7 +30,7 @@ export default function HomeCPU({ d }: { d: ServerStats }) {
                 <View style={{ display: 'flex', flexDirection: 'row' }}>
                     <View style={{ flex: 1 }}>
                         <Text variant="labelLarge" style={{ color: 'gray' }}>{t('cpu_clock')}</Text>
-                        <Text>{d.cpu.speed.length > 1 ? d.cpu.speed.length : "(unknown) 0"} MHz</Text>
+                        <Text>{d.cpu.speed.length > 1 ? d.cpu.speed : "(unknown) 0"} MHz</Text>
                     </View>
                 </View>
                 <View style={{ display: 'flex', flexDirection: 'row' }}>
