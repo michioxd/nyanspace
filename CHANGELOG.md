@@ -2,6 +2,15 @@
 
 Currently nyanspace still in cutting-edge state.
 
+## 0.1-cuttingedge.31032024 (2024-03-31)
+
+- Added Storage, Network, Temperature section.
+- Fixed header did not sync color with Android 12+ monet engine.
+- Resized app icon (again).
+- Added System uptime in CPU section.
+- Added `Gathering data` after established connection to SSH and waiting for crawler script response in `Connecting`.
+- Used `ActivityIndicator` from `react-native` instead `react-native-paper`.
+
 ## 0.1-cuttingedge.30032024 (2024-03-30)
 
 - Added a CPU page in the home section.

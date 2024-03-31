@@ -4,5 +4,6 @@ export const STORE_LANGUAGE_KEY = "NYANSPACE_LANG";
 export const LISTING_KEY = "NYANSPACE_LISTING_SERVER";
 export const SELECTED_KEY = "NYANSPACE_SELECTED_SERVER";
 export const INTERVAL_KEY = "NYANSPACE_INTERVAL";
+export const STORAGE_SHOW_TMPFS = "NYANSPACE_SHOW_TMPFS";
 
 export type UserThemeType = "system" | "light" | "dark";

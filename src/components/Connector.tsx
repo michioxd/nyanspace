@@ -65,7 +65,7 @@ export default function ConnectorContainer({ children }: { children: ReactNode }
                             selected.password
                         )
                     }
-                    console.log("Connected to " + selected.address);
+                    console.log("Connected to " + selected.address, client.current);
                     const checkShell = await client.current.execute(`echo $0`);
                     console.log(checkShell);
                     if (/bash/g.test(checkShell) === false) {

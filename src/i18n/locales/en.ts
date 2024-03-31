@@ -67,6 +67,18 @@ const locale: ResourceLanguage = {
         "logical_cores": "Logical cores",
         "physical_cores": "Physical cores",
         "flags": "Flags",
+        "disk_space": "Disk space",
+        "mounted": "Mounted",
+        "show_tmpfs": "Show tmpfs paritions",
+        "ipv4_address": "IPv4 address",
+        "ipv6_address": "IPv6 address",
+        "interface": "Interface",
+        "gathering_data": "Gathering data...",
+        "system_uptime": "System uptime",
+        "days": "Days",
+        "hours": "Hours",
+        "minutes": "Minutes",
+        "seconds": "Seconds"
     }
 }
 

@@ -20,7 +20,7 @@ const locale: ResourceLanguage = {
         "select_or_add_a_server": "Chọn hoặc thêm một máy chủ",
         "add_server": "Thêm máy chủ",
         "edit_server": "Chỉnh sửa máy chủ",
-        "add_server_notice": "Hãy chắc chắn máy chủ của bạn có SSH và đang sử dụng GNU Bash hoặc zsh. Hiện tại chỉ đang hỗ trợ Bash và zsh.",
+        "add_server_notice": "Hãy chắc chắn máy chủ của bạn có SSH và đang sử dụng GNU Bash. Hiện tại chỉ hỗ trợ Bash.",
         "server_name": "Tên máy chủ",
         "server_address": "Địa chỉ",
         "server_port": "Cổng",
@@ -66,7 +66,19 @@ const locale: ResourceLanguage = {
         "cache_size": "Kích thước bộ nhớ đệm",
         "logical_cores": "Lõi logic",
         "physical_cores": "Lõi vật lý",
-        "flags": "Cờ"
+        "flags": "Cờ",
+        "disk_space": "Sử dụng đĩa",
+        "mounted": "Đã gắn vào",
+        "show_tmpfs": "Hiển thị phân vùng tmpfs",
+        "ipv4_address": "Địa chỉ IPv4",
+        "ipv6_address": "Địa chỉ IPv6",
+        "interface": "Giao diện",
+        "gathering_data": "Đang lấy dữ liệu...",
+        "system_uptime": "Thời gian hoạt động của hệ thống",
+        "days": "Ngày",
+        "hours": "Giờ",
+        "minutes": "Phút",
+        "seconds": "Giây"
     }
 }
 

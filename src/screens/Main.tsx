@@ -49,7 +49,7 @@ export default function ScreenMain() {
                     labelMaxFontSizeMultiplier={2}
                     renderScene={BottomNavigation.SceneMap({
                         home: ScreenMainHome,
-                        sftp: ScreenMainSFTP,
+                        filemanager: ScreenMainSFTP,
                         settings: ScreenMainSettings,
                         action: ScreenMainAction
                     })}

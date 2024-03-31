@@ -14,6 +14,9 @@ import { INTERVAL_KEY } from "../../utils/def";
 import HomeDashboard from "./components/Home/Dashboard";
 import { ServerStats } from "../../types/Stats";
 import HomeCPU from "./components/Home/CPU";
+import HomeStorage from "./components/Home/Storage";
+import HomeNetwork from "./components/Home/Network";
+import HomeTemperature from "./components/Home/Temperature";
 
 export default function ScreenMainHome() {
     const theme = useTheme();
@@ -28,6 +31,11 @@ export default function ScreenMainHome() {
         },
         scrollViewContainer: {
             padding: 16,
+            flex: 1,
+            backgroundColor: theme.colors.background
+        },
+        scrollViewContainerNoPadding: {
+            padding: 0,
             flex: 1,
             backgroundColor: theme.colors.background
         }
@@ -45,11 +53,7 @@ export default function ScreenMainHome() {
                     }
                 }
             });
-            (async () => {
-                const interval = await AsyncStorage.getItem(INTERVAL_KEY);
-                if (conn.client && conn.connected)
-                    conn?.client.writeToShell(" /bin/bash ~/.nyanspace/.nyanspace.sh " + (interval ?? "1") + "\n");
-            })();
+            conn?.client.writeToShell(" /bin/bash ~/.nyanspace/.nyanspace.sh 1\n");
         } else {
             setData(null);
         }
@@ -57,12 +61,12 @@ export default function ScreenMainHome() {
 
     return (
         <>
-            <Header title="nyanspace" headerRight={() => <IconButton onPress={() => navigate("SelectServer")} icon="server" />} />
+            <Header title="nyanspace" headerRight={() => <IconButton onPress={() => navigate("SelectServer")} icon="server" />} headerStyle={{ backgroundColor: theme.colors.elevation.level2 }} />
             <View style={{ flex: 1 }}>
                 {conn?.serverSelected === null ? <View style={styles.container}>
                     <NoServerSelected />
                 </View> : (conn?.connecting || data === null) ? <View style={styles.container}>
-                    <MainConnecting />
+                    <MainConnecting gatheringData={conn?.connecting === false && data === null} />
                 </View> : <>
                     <TabsProvider
                         defaultIndex={0}
@@ -84,22 +88,17 @@ export default function ScreenMainHome() {
                             </TabScreen>
                             <TabScreen label={t('storage')}>
                                 <ScrollView style={styles.scrollViewContainer}>
-                                    <Text>storage</Text>
+                                    <HomeStorage d={data} />
                                 </ScrollView>
                             </TabScreen>
                             <TabScreen label={t('network')}>
-                                <ScrollView style={styles.scrollViewContainer}>
-                                    <Text>Network</Text>
+                                <ScrollView style={styles.scrollViewContainerNoPadding}>
+                                    <HomeNetwork d={data} />
                                 </ScrollView>
                             </TabScreen>
                             <TabScreen label={t('temperature')}>
-                                <ScrollView style={styles.scrollViewContainer}>
-                                    <Text>temperature</Text>
-                                </ScrollView>
-                            </TabScreen>
-                            <TabScreen label={t('summary')}>
-                                <ScrollView style={styles.scrollViewContainer}>
-                                    <Text>Summary</Text>
+                                <ScrollView style={styles.scrollViewContainerNoPadding}>
+                                    <HomeTemperature d={data} />
                                 </ScrollView>
                             </TabScreen>
                         </Tabs>

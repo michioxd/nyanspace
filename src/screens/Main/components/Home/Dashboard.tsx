@@ -23,7 +23,7 @@ const CircleItem = ({ percent, secondText, icon, color, primaryText, customValue
                 {primaryText && <Text style={{ marginBottom: 8 }} variant="titleSmall">{primaryText}</Text>}
                 <AnimatedCircularProgress
                     width={10}
-                    backgroundWidth={4}
+                    backgroundWidth={3}
                     fill={percent}
                     size={120}
                     tintColor={color}
@@ -56,18 +56,18 @@ export default function HomeDashboard({ d }: { d: ServerStats }) {
         });
 
         return {
-            upAvg: upAvg / d.network.interfaces.length,
-            downAvg: downAvg / d.network.interfaces.length,
+            upAvg: upAvg,
+            downAvg: downAvg,
             statusUp: statusUp > 0,
             statusDown: statusDown > 0
         }
     }, [d.network.interfaces]);
 
     return (
-        <View style={{ flex: 1 }}>
+        <View style={{ flex: 1, marginBottom: 30, }}>
             <Text variant="titleLarge">{d.hostname}</Text>
             <Text variant="titleSmall" style={{ color: "gray" }}>{d.distro_name + " " + d.distro_version}</Text>
-            <View style={{ flex: 1, marginTop: 10, marginBottom: 30, flexDirection: 'row', flexWrap: 'wrap' }}>
+            <View style={{ flex: 1, marginTop: 10, flexDirection: 'row', flexWrap: 'wrap' }}>
                 <CircleItem primaryText={t('cpu')} color="#117dbb" icon="memory" percent={Math.round(d.stats.cpu_usage)} />
                 <CircleItem primaryText={t('ram')} color="#b01eae" icon="chip" percent={Math.round(d.stats.mem_used / d.stats.mem_total * 100)} secondText={formatData(d.stats.mem_used, true) + "/" + formatData(d.stats.mem_total, true)} />
                 {d.partitions.filter(d => d.target == "/" || d.source.startsWith("/dev/sd")).map((d, i) => (
@@ -75,7 +75,7 @@ export default function HomeDashboard({ d }: { d: ServerStats }) {
                 ))}
                 <SurfaceItem>
                     <Text style={{ marginBottom: 8 }} variant="titleSmall">{t('network')}</Text>
-                    <View style={{ flex: 1, display: 'flex', flexDirection: 'row', justifyContent: 'center', marginTop: 35 }}>
+                    <View style={{ flex: 1, display: 'flex', flexDirection: 'row', justifyContent: 'center', marginTop: 30 }}>
                         <Icon source="arrow-up-bold" color={networkState.statusUp ? "#2ed933" : "#2ed93355"} size={60} />
                         <Icon source="arrow-down-bold" color={networkState.statusDown ? "#d92e2e" : "#d92e2e44"} size={60} />
                     </View>

@@ -24,7 +24,7 @@ export default function ScreenMainSettings() {
     return (
         <>
             <View style={{ flex: 1 }}>
-                <Header title={t('settings')} />
+                <Header title={t('settings')} headerStyle={{ backgroundColor: theme.colors.elevation.level2 }} />
                 <ScrollView style={{ width: '100%', height: '100%', backgroundColor: theme.colors.background }}>
                     <List.Section>
                         <List.Subheader>{t('theme')}</List.Subheader>
