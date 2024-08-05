@@ -78,7 +78,8 @@ const locale: ResourceLanguage = {
         "days": "Days",
         "hours": "Hours",
         "minutes": "Minutes",
-        "seconds": "Seconds"
+        "seconds": "Seconds",
+        "no_temperature_sensors_found": "No temperature sensors found"
     }
 }
 

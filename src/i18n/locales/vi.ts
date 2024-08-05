@@ -78,7 +78,8 @@ const locale: ResourceLanguage = {
         "days": "Ngày",
         "hours": "Giờ",
         "minutes": "Phút",
-        "seconds": "Giây"
+        "seconds": "Giây",
+        "no_temperature_sensors_found": "Không tìm thấy cảm biến nhiệt độ",
     }
 }
 
