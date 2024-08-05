@@ -20,21 +20,25 @@ export default function ScreenMain() {
                 key: 'home',
                 title: t('home'),
                 focusedIcon: 'home',
+                unfocusedIcon: 'home-outline'
             },
             {
                 key: 'filemanager',
                 title: t('files'),
                 focusedIcon: 'folder',
+                unfocusedIcon: 'folder-outline'
             },
             {
                 key: 'action',
                 title: t('action'),
                 focusedIcon: 'power-cycle',
+                unfocusedIcon: 'power-cycle'
             },
             {
                 key: 'settings',
                 title: t('settings'),
-                focusedIcon: 'cog'
+                focusedIcon: 'cog',
+                unfocusedIcon: 'cog-outline'
             },
         ]
     }, [t]);

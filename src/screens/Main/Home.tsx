@@ -1,6 +1,6 @@
 import { Header } from "@react-navigation/elements";
 import { ScrollView, StyleSheet, View } from "react-native";
-import { IconButton, Text, useTheme } from "react-native-paper";
+import { IconButton, useTheme } from "react-native-paper";
 import { navigate } from "../../utils/navigate";
 
 import NoServerSelected from "./components/NoServerSelected";
@@ -9,14 +9,13 @@ import { useConnector } from "../../context/Connector";
 import { useEffect, useMemo, useState } from "react";
 import { Tabs, TabScreen, TabsProvider } from "react-native-paper-tabs";
 import { useTranslation } from "react-i18next";
-import AsyncStorage from "@react-native-async-storage/async-storage";
-import { INTERVAL_KEY } from "../../utils/def";
 import HomeDashboard from "./components/Home/Dashboard";
 import { ServerStats } from "../../types/Stats";
 import HomeCPU from "./components/Home/CPU";
 import HomeStorage from "./components/Home/Storage";
 import HomeNetwork from "./components/Home/Network";
 import HomeTemperature from "./components/Home/Temperature";
+import ConnectorState from "../../components/ConnectorState";
 
 export default function ScreenMainHome() {
     const theme = useTheme();
@@ -63,47 +62,45 @@ export default function ScreenMainHome() {
         <>
             <Header title="nyanspace" headerRight={() => <IconButton onPress={() => navigate("SelectServer")} icon="server" />} headerStyle={{ backgroundColor: theme.colors.elevation.level2 }} />
             <View style={{ flex: 1 }}>
-                {conn?.serverSelected === null ? <View style={styles.container}>
-                    <NoServerSelected />
-                </View> : (conn?.connecting || data === null) ? <View style={styles.container}>
-                    <MainConnecting gatheringData={conn?.connecting === false && data === null} />
-                </View> : <>
-                    <TabsProvider
-                        defaultIndex={0}
-                    >
-                        <Tabs
-                            uppercase={true}
-                            style={{ backgroundColor: "transparent" }}
-                            mode="scrollable"
+                <ConnectorState dataDone={data !== null}>
+                    {data !== null &&
+                        <TabsProvider
+                            defaultIndex={0}
                         >
-                            <TabScreen label={t('dashboard')}>
-                                <ScrollView style={styles.scrollViewContainer}>
-                                    <HomeDashboard d={data} />
-                                </ScrollView>
-                            </TabScreen>
-                            <TabScreen label={t('cpu')}>
-                                <ScrollView style={styles.scrollViewContainer}>
-                                    <HomeCPU d={data} />
-                                </ScrollView>
-                            </TabScreen>
-                            <TabScreen label={t('storage')}>
-                                <ScrollView style={styles.scrollViewContainer}>
-                                    <HomeStorage d={data} />
-                                </ScrollView>
-                            </TabScreen>
-                            <TabScreen label={t('network')}>
-                                <ScrollView style={styles.scrollViewContainerNoPadding}>
-                                    <HomeNetwork d={data} />
-                                </ScrollView>
-                            </TabScreen>
-                            <TabScreen label={t('temperature')}>
-                                <ScrollView style={styles.scrollViewContainerNoPadding}>
-                                    <HomeTemperature d={data} />
-                                </ScrollView>
-                            </TabScreen>
-                        </Tabs>
-                    </TabsProvider>
-                </>}
+                            <Tabs
+                                uppercase={true}
+                                style={{ backgroundColor: "transparent" }}
+                                mode="scrollable"
+                            >
+                                <TabScreen label={t('dashboard')}>
+                                    <ScrollView style={styles.scrollViewContainer}>
+                                        <HomeDashboard d={data} />
+                                    </ScrollView>
+                                </TabScreen>
+                                <TabScreen label={t('cpu')}>
+                                    <ScrollView style={styles.scrollViewContainer}>
+                                        <HomeCPU d={data} />
+                                    </ScrollView>
+                                </TabScreen>
+                                <TabScreen label={t('storage')}>
+                                    <ScrollView style={styles.scrollViewContainer}>
+                                        <HomeStorage d={data} />
+                                    </ScrollView>
+                                </TabScreen>
+                                <TabScreen label={t('network')}>
+                                    <ScrollView style={styles.scrollViewContainerNoPadding}>
+                                        <HomeNetwork d={data} />
+                                    </ScrollView>
+                                </TabScreen>
+                                <TabScreen label={t('temperature')}>
+                                    <ScrollView style={styles.scrollViewContainerNoPadding}>
+                                        <HomeTemperature d={data} />
+                                    </ScrollView>
+                                </TabScreen>
+                            </Tabs>
+                        </TabsProvider>
+                    }
+                </ConnectorState>
             </View >
         </>
     )

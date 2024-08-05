@@ -18,7 +18,7 @@ import { ConfigurationContext } from './context/Configuration';
 import Root from './root';
 import SnackbarContainer from './components/SnackbarAPI';
 import { DialogProvider } from './context/DialogProvider';
-import ConnectorContainer from './components/Connector';
+import ConnectorContainer from './core/Connector';
 
 export default function App() {
 
