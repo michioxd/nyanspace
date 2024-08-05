@@ -5,7 +5,7 @@ import {
     CardStyleInterpolators,
     createStackNavigator,
 } from '@react-navigation/stack';
-import { Appbar, IconButton } from 'react-native-paper';
+import { Appbar, useTheme } from 'react-native-paper';
 import ScreenSelectServer from './screens/SelectServer';
 import ScreenAbout from './screens/About';
 import ScreenMain from './screens/Main';
@@ -17,6 +17,7 @@ import ScreenAddServer from './screens/AddServer';
 const Stack = createStackNavigator();
 
 export default function Root() {
+    const theme = useTheme();
     const { t } = useTranslation();
     const cardStyleInterpolator =
         Platform.OS === 'android'
@@ -41,6 +42,9 @@ export default function Root() {
                                 </Appbar.Header>
                             );
                         },
+                        cardStyle: {
+                            backgroundColor: theme.colors.background
+                        }
                     };
                 }}
             >
