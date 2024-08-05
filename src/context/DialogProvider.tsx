@@ -1,7 +1,7 @@
 import { ReactNode, useEffect, useState } from "react";
 import DialogAPI, { DialogAPIInputData } from "../components/DialogAPI";
 
-export function DialogProvider({ children }: { children: ReactNode }) {
+export function DialogProvider({ children }: { children?: ReactNode }) {
     const [dialogDisplay, setDialogDisplay] = useState<React.ReactNode>(null);
 
     useEffect(() => {

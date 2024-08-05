@@ -80,6 +80,18 @@ const locale: ResourceLanguage = {
         "minutes": "Phút",
         "seconds": "Giây",
         "no_temperature_sensors_found": "Không tìm thấy cảm biến nhiệt độ",
+        "cannot_fetch_files": "Không thể tải danh sách tệp",
+        "file_options": "Tuỳ chọn tệp",
+        "download_file": "Tải tệp về",
+        "open_with_text_editor": "Mở với trình soạn thảo văn bản",
+        "rename": "Đổi tên",
+        "remove_file": "Xóa tệp",
+        "invalid_file_name": "Tên tệp không hợp lệ",
+        "cannot_rename_file": "Không thể đổi tên tệp",
+        "cannot_remove_file": "Không thể xóa tệp",
+        "file_removed": "Tệp đã được xóa",
+        "remove_file_confirm": "Bạn có muốn xóa tệp này không?",
+        "file_tree": "Cây tệp"
     }
 }
 

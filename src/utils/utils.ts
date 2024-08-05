@@ -76,3 +76,13 @@ export function convertTime(seconds: number): { days: number, hours: number, min
         secs: Math.floor(seconds % 60)
     };
 }
+
+export function validateFileName(name: string): boolean {
+    return /^[^<>:"/\\|?*\x00-\x1F][^<>:"/\\|?*\x00-\x1F]{0,254}$/.test(name) && name !== '.' && name !== '..';
+}
+
+export function crPath(current: string, file: string) {
+    const path = current !== '/' ? current + '/' + file : '/' + file;
+
+    return path.replace(/\/{2,}/g, '/');
+}

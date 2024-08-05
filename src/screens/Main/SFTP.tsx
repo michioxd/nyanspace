@@ -1,16 +1,16 @@
 import { Header } from "@react-navigation/elements";
 import { useTranslation } from "react-i18next";
 import { RefreshControl, ScrollView, View } from "react-native";
-import { ActivityIndicator, IconButton, List, ProgressBar, Text, useTheme } from "react-native-paper";
+import { ActivityIndicator, IconButton, List, ProgressBar, Text, TouchableRipple, useTheme } from "react-native-paper";
 import { useConnector } from "../../context/Connector";
 import ConnectorState from "../../components/ConnectorState";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { LsResult } from "@dylankenneally/react-native-ssh-sftp";
-import { fileTypeIcon, formatData } from "../../utils/utils";
-import DialogAPI, { DialogType, useDialogCTX } from "../../components/DialogAPI";
+import { crPath, fileTypeIcon, formatData, validateFileName } from "../../utils/utils";
+import DialogAPI, { DialogResponseType, DialogType, useDialogCTX } from "../../components/DialogAPI";
 import { useSnackbar } from "../../context/SnackbarContext";
 
-const FileActionDialog = ({ rename }: { rename: () => void }) => {
+const FileActionDialog = ({ rename, remove }: { rename: () => void, remove: () => void }) => {
     const { t } = useTranslation();
     return (
         <List.Section>
@@ -29,11 +29,19 @@ const FileActionDialog = ({ rename }: { rename: () => void }) => {
                 }}
             />
             <List.Item
-                title={t('rename_file')}
-                left={() => <List.Icon icon="folder-edit" />}
+                title={t('rename')}
+                left={() => <List.Icon icon="file-edit" />}
                 onPress={() => {
                     DialogAPI.close();
                     rename();
+                }}
+            />
+            <List.Item
+                title={t('remove_file')}
+                left={() => <List.Icon icon="trash-can" />}
+                onPress={() => {
+                    DialogAPI.close();
+                    remove();
                 }}
             />
         </List.Section>
@@ -52,29 +60,101 @@ export default function ScreenMainSFTP() {
     const [fetching, setFetching] = useState(false);
     const [forceRefresh, setForceRefresh] = useState(0);
 
-    const handleRenameFIle = useCallback(async (path: string, currentName: string, isDir: boolean) => {
+    const handleOpenFileTree = useCallback(() => {
+        DialogAPI.show({
+            type: DialogType.CONTENT,
+            title: t('file_tree'),
+            content: <List.Section>
+                <List.Item
+                    title={'/'}
+                    onPress={() => setCurrentPath(
+                        '/'
+                    )}
+                    left={() => <List.Icon icon="home" />}
+                />
+                {currentPath.split('/').map((item, index) => item && (
+                    <List.Item
+                        key={index}
+                        title={item}
+                        left={() => <List.Icon icon={(index + 1 === currentPath.split('/').length) ? "folder" : "folder-outline"} />}
+                        onPress={() => {
+                            setCurrentPath(currentPath.split('/').slice(0, index + 1).join('/'))
+                            DialogAPI.close();
+                        }}
+                    />
+                ))}
+            </List.Section>
+        })
+    }, [currentPath]);
+
+    const handleRenameFile = useCallback(async (path: string, currentName: string, isDir: boolean) => {
         const newName = await DialogAPI.show({
             type: DialogType.PROMPT,
-            title: isDir ? t('rename_folder') : t('rename_file'),
+            title: t('rename'),
             defaultValue: currentName
-        })
+        });
+
+        if (newName === DialogResponseType.CANCELLED) return;
+
+        if (!newName) return;
+
+        if (newName === currentName) return
+
+        if (!validateFileName(newName)) {
+            snackbar?.show({ content: t('invalid_file_name') });
+            return;
+        }
+
+        try {
+            setFetching(true);
+            await conn?.client?.sftpRename(crPath(path, currentName), crPath(path, newName));
+        } catch (e) {
+            snackbar?.show({ content: t('cannot_rename_file') + ": " + e });
+        } finally {
+            setForceRefresh(p => p + 1);
+        }
+
+    }, []);
+
+    const handleDeleteFile = useCallback(async (path: string, currentName: string, isDir: boolean) => {
+        const res = await DialogAPI.show({
+            type: DialogType.CONFIRM,
+            icon: 'trash-can',
+            title: t('remove_file'),
+            description: t('remove_file_confirm') + ' (' + currentName + ')'
+        });
+
+        if (res !== DialogResponseType.CONFIRMED) return;
+
+        try {
+            setFetching(true);
+            await conn?.client?.sftpRm(crPath(path, currentName));
+        } catch (e) {
+            snackbar?.show({ content: t('cannot_remove_file') + ": " + e });
+        } finally {
+            setForceRefresh(p => p + 1)
+            snackbar?.show({ content: t('file_removed') });
+        }
     }, []);
 
     const handleFilePress = useCallback((file: LsResult) => {
         DialogAPI.show({
             type: DialogType.CONTENT,
             title: t('file_options'),
-            content: <FileActionDialog rename={() => {
-                handleRenameFIle(currentPath, file.filename.replace(/\/$/, ''), file.isDirectory);
-            }} />
+            content: <FileActionDialog
+                rename={() => {
+                    handleRenameFile(fetchedCurrentPath, file.filename.replace(/\/$/, ''), file.isDirectory);
+                }}
+                remove={async () => {
+                    handleDeleteFile(fetchedCurrentPath, file.filename.replace(/\/$/, ''), file.isDirectory);
+                }}
+            />
         })
-    }, []);
+    }, [fetchedCurrentPath]);
 
     useEffect(() => {
+        console.log("useEffect", conn?.client, currentPath, forceRefresh);
         if (!conn?.client || !conn?.connected) {
-            setLs([]);
-            setCurrentPath("/");
-            setFetchedCurrentPath("/");
             return;
         };
 
@@ -83,6 +163,7 @@ export default function ScreenMainSFTP() {
 
             try {
                 setFetching(true);
+                await conn.client.connectSFTP();
                 const lsRef = await conn.client.sftpLs(currentPath || '/');
                 setLs(lsRef);
                 setFetchedCurrentPath(currentPath);
@@ -93,7 +174,7 @@ export default function ScreenMainSFTP() {
             }
         })();
 
-    }, [conn, currentPath, forceRefresh]);
+    }, [currentPath, forceRefresh]);
 
     const sortedLs = useMemo(() => {
         return ls.sort((a, b) => {
@@ -108,46 +189,51 @@ export default function ScreenMainSFTP() {
     return (
         <>
             <Header title={t('files')} headerStyle={{ backgroundColor: theme.colors.elevation.level2 }}
-                headerRight={() => <>
-                    {fetching ? <ActivityIndicator size="small" style={{ marginRight: 15 }} /> : <IconButton onPress={() => setForceRefresh(i => i + 1)} icon="refresh" />}
-                </>}
+                headerRight={() => <View style={{ display: 'flex', flexDirection: 'row' }}>
+                    <IconButton disabled={fetching} onPress={() => handleOpenFileTree()} icon="file-tree" />
+                    <IconButton disabled={fetching} onPress={() => setForceRefresh(i => i + 1)} icon="magnify" />
+                </View>}
             />
-
             <ConnectorState dataDone={true}>
-                <ScrollView style={{ width: '100%', height: '100%', backgroundColor: theme.colors.background, flex: 1 }}
-                    refreshControl={
-                        <RefreshControl refreshing={fetching} onRefresh={() => {
-                            setFetching(true);
-                            setForceRefresh(p => p + 1)
-                        }} />
-                    }
-                >
-                    <List.Section>
-                        {(fetchedCurrentPath !== '/') && <List.Item
-                            title="..."
-                            left={() => <List.Icon style={{ marginLeft: 15 }} icon="folder-outline" />}
-                            onPress={() => {
-                                setCurrentPath(currentPath.split('/').slice(0, -1).join('/') || "/");
-                            }}
-                        />}
-                        {sortedLs.map((item, index) => (
-                            <List.Item
-                                key={index}
-                                title={item.filename.replace(/\/$/, '')}
-                                description={
-                                    <Text style={{ fontSize: 10, color: 'gray' }}>
-                                        {formatData(item.fileSize)} - {(new Date(parseInt(item.lastAccess) * 1000)).toLocaleString()}
-                                    </Text>
-                                }
-                                left={() => <List.Icon style={{ marginLeft: 15 }} icon={item.isDirectory ? "folder" : fileTypeIcon(item.filename)} />}
+                <View style={{ backgroundColor: theme.colors.background, flex: 1 }}>
+                    <TouchableRipple onPress={handleOpenFileTree}>
+                        <Text style={{ padding: 5, paddingBottom: 0 }} variant="bodySmall">{currentPath}</Text>
+                    </TouchableRipple>
+                    <ScrollView style={{ flex: 1 }}
+                        refreshControl={
+                            <RefreshControl refreshing={fetching} onRefresh={() => {
+                                setFetching(true);
+                                setForceRefresh(p => p + 1)
+                            }} />
+                        }
+                    >
+                        <List.Section>
+                            {(fetchedCurrentPath !== '/') && <List.Item
+                                title="..."
+                                left={() => <List.Icon style={{ marginLeft: 15 }} icon="folder-outline" />}
                                 onPress={() => {
-                                    if (item.isDirectory) setCurrentPath((currentPath !== '/' ? currentPath : '') + '/' + item.filename.replace(/\/$/, ''));
-                                    else handleFilePress(item);
+                                    setCurrentPath(currentPath.split('/').slice(0, -1).join('/') || "/");
                                 }}
-                            />
-                        ))}
-                    </List.Section>
-                </ScrollView>
+                            />}
+                            {sortedLs.map((item, index) => (
+                                <List.Item
+                                    key={index}
+                                    title={item.filename.replace(/\/$/, '')}
+                                    description={
+                                        <Text style={{ fontSize: 10, color: 'gray' }}>
+                                            {formatData(item.fileSize)} - {(new Date(parseInt(item.lastAccess) * 1000)).toLocaleString()}
+                                        </Text>
+                                    }
+                                    left={() => <List.Icon style={{ marginLeft: 15 }} icon={item.isDirectory ? "folder" : fileTypeIcon(item.filename)} />}
+                                    onPress={() => {
+                                        if (item.isDirectory) setCurrentPath(crPath(fetchedCurrentPath, item.filename.replace(/\/$/, '')));
+                                        else handleFilePress(item);
+                                    }}
+                                />
+                            ))}
+                        </List.Section>
+                    </ScrollView>
+                </View>
             </ConnectorState>
         </>
     )

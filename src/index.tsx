@@ -110,11 +110,10 @@ export default function App() {
                         }
                     >
                         <SnackbarContainer>
-                            <DialogProvider>
-                                <ConnectorContainer>
-                                    <Root />
-                                </ConnectorContainer>
-                            </DialogProvider>
+                            <DialogProvider />
+                            <ConnectorContainer>
+                                <Root />
+                            </ConnectorContainer>
                         </SnackbarContainer>
                     </NavigationContainer>
                 </ConfigurationContext.Provider>

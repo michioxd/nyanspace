@@ -22,7 +22,7 @@
         "foregroundImage": "./src/assets/app/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "versionCode": 11,
+      "versionCode": 12,
       "package": "ch.michioxd.nyanspace"
     },
     "plugins": [

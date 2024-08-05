@@ -79,7 +79,19 @@ const locale: ResourceLanguage = {
         "hours": "Hours",
         "minutes": "Minutes",
         "seconds": "Seconds",
-        "no_temperature_sensors_found": "No temperature sensors found"
+        "no_temperature_sensors_found": "No temperature sensors found",
+        "cannot_fetch_files": "Cannot fetch files",
+        "file_options": "File options",
+        "download_file": "Download file",
+        "open_with_text_editor": "Open with text editor",
+        "rename": "Rename",
+        "remove_file": "Remove file",
+        "invalid_file_name": "Invalid file name",
+        "cannot_rename_file": "Cannot rename file",
+        "cannot_remove_file": "Cannot remove file",
+        "file_removed": "File removed",
+        "remove_file_confirm": "Do you want to remove this file?",
+        "file_tree": "File tree"
     }
 }
 
