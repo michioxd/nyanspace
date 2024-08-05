@@ -34,12 +34,7 @@ export default function ConnectorContainer({ children }: { children: ReactNode }
 
     useEffect(() => {
         (async () => {
-            if (client.current !== null) {
-                client.current.closeShell();
-                client.current.disconnect();
-                client.current = null;
-                setConnected(false);
-            }
+            closeClient();
 
             if (serverSelected === null) return;
             setConnecting(true);

@@ -2,7 +2,7 @@
   "expo": {
     "name": "nyanspace",
     "slug": "nyanspace",
-    "version": "0.1-cuttingedge.31032024",
+    "version": "0.1-cuttingedge.05082024",
     "orientation": "portrait",
     "icon": "./src/assets/app/icon.png",
     "userInterfaceStyle": "automatic",
@@ -22,7 +22,7 @@
         "foregroundImage": "./src/assets/app/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "versionCode": 10,
+      "versionCode": 11,
       "package": "ch.michioxd.nyanspace"
     },
     "plugins": [

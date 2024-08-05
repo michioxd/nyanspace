@@ -13,7 +13,7 @@ export default function ConnectorState({ children, dataDone }: { children: React
         <>
             {conn?.serverSelected === null ? <View style={{ backgroundColor: theme.colors.background, flex: 1 }}>
                 <NoServerSelected />
-            </View> : (conn?.connecting || !dataDone) ? <View style={{ backgroundColor: theme.colors.background, flex: 1 }}>
+            </View> : (conn?.connecting || !dataDone) ? <View style={{ backgroundColor: theme.colors.background, flex: 1, position: 'relative' }}>
                 <MainConnecting gatheringData={conn?.connecting === false && !dataDone} />
             </View> : children}
         </>

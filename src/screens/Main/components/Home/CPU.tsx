@@ -8,14 +8,15 @@ import { useTranslation } from "react-i18next";
 import { Image, View } from "react-native";
 import moment from "moment";
 import { useMemo } from "react";
+import { convertTime } from "../../../../utils/utils";
 
 export default function HomeCPU({ d }: { d: ServerStats }) {
     const { t } = useTranslation();
 
     const upTime = useMemo(() => {
-        const dur = moment.duration(d.uptime, 'seconds');
+        const dur = convertTime(d.uptime);
 
-        return `${dur.days()} ${t('days')} ${dur.hours()} ${t('hours')} ${dur.minutes()} ${t('minutes')} ${dur.seconds()} ${t('seconds')}`
+        return `${dur.days} ${t('days')} ${dur.hours} ${t('hours')} ${dur.mins} ${t('minutes')} ${dur.secs} ${t('seconds')}`
     }, []);
     return (
         <>

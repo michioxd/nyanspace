@@ -1,5 +1,5 @@
 import { EventEmitter } from 'events';
-import React, { createContext, ReactNode, useCallback } from 'react';
+import React, { createContext, ReactNode, useCallback, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Dimensions, ScrollView } from 'react-native';
 import { Button, Dialog, Portal, Text, TextInput } from 'react-native-paper';
@@ -39,6 +39,7 @@ export type DialogAPIInputData = {
     title?: string,
     description?: string,
     label?: string,
+    defaultValue?: string,
     cancelTitle?: string,
     confirmTitle?: string,
     dismissable?: boolean
@@ -53,6 +54,7 @@ export type DialogAPIInputData = {
 
 export interface DialogAPI {
     on(event: 'new', listener: () => void): this;
+    on(event: 'close', listener: () => void): this;
 }
 
 let ctx = createContext({
@@ -81,13 +83,15 @@ function ConstructedDialog(props: {
         setButtonList(button ?? []);
     }, []);
 
-    const closeDialog = () => closeWithData();
+    const closeDialog = () => {
+        closeWithData();
+    }
 
     const ctxData = React.useMemo(() => ({
         closeWithData,
         setButtons,
         closeDialog
-    }), [closeWithData]);
+    }), [closeWithData, props]);
 
     return (
         <ctx.Provider value={ctxData}>
@@ -96,14 +100,14 @@ function ConstructedDialog(props: {
                     {props.data.icon ? <>
                         <Dialog.Icon icon={props.data.icon ?? "alert"} />
                         <Dialog.Title style={{ textAlign: "center" }}>{props.data.title}</Dialog.Title>
-                    </> : <Dialog.Title>Alert</Dialog.Title>}
+                    </> : props.data.title ? <Dialog.Title>{props.data.title}</Dialog.Title> : <Dialog.Title>Alert</Dialog.Title>}
                     {(props.data.type === DialogType.ALERT || props.data.type === DialogType.CONFIRM) ? <>
                         <Dialog.Content>
                             <Text variant="bodyMedium">{props.data.description}</Text>
                         </Dialog.Content>
                     </> : props.data.type === DialogType.PROMPT ? <>
                         <Dialog.Content>
-                            <Text variant="bodyMedium">{props.data.description}</Text>
+                            {props.data.description && <Text variant="bodyMedium">{props.data.description}</Text>}
                             <TextInput
                                 label={props.data.label}
                                 style={{ marginTop: 10 }}
@@ -148,6 +152,11 @@ export class DialogAPI extends EventEmitter {
             this.dialogQueue.push({ data, callback: resolve });
             this.emit('new');
         });
+    }
+
+    close() {
+        this.dialogQueue.shift();
+        this.emit('close');
     }
 
     constructElement(data: DialogAPIInputData, callback: (value?: string) => void) {

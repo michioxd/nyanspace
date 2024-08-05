@@ -29,6 +29,11 @@ export function DialogProvider({ children }: { children: ReactNode }) {
 
             dialogRunning = false;
         });
+
+        DialogAPI.on('close', () => {
+            setDialogDisplay(null);
+            dialogRunning = false;
+        });
     }, []);
 
     return (
