@@ -91,7 +91,16 @@ const locale: ResourceLanguage = {
         "cannot_remove_file": "Không thể xóa tệp",
         "file_removed": "Tệp đã được xóa",
         "remove_file_confirm": "Bạn có muốn xóa tệp này không?",
-        "file_tree": "Cây tệp"
+        "file_tree": "Cây tệp",
+        "not_connected_please_reconnect": "Chưa kết nối, vui lòng kết nối lại",
+        "cancelled": "Đã hủy",
+        "downloading": "Đang tải về",
+        "download_completed": "Tải về hoàn tất",
+        "downloaded_to": "Đã tải vào",
+        "download_failed": "Tải về thất bại",
+        "cannot_download_file": "Không thể tải tệp",
+        "wait_for_another_download_finish": "Vui lòng chờ tải xuống khác hoàn tất",
+        "file_already_exists_continue": "Tệp đã tồn tại, bạn có muốn tiếp tục không?",
     }
 }
 

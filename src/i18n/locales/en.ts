@@ -91,7 +91,16 @@ const locale: ResourceLanguage = {
         "cannot_remove_file": "Cannot remove file",
         "file_removed": "File removed",
         "remove_file_confirm": "Do you want to remove this file?",
-        "file_tree": "File tree"
+        "file_tree": "File tree",
+        "not_connected_please_reconnect": "Not connected, please reconnect",
+        "cancelled": "Cancelled",
+        "downloading": "Downloading",
+        "download_completed": "Download completed",
+        "downloaded_to": "Downloaded to",
+        "download_failed": "Download failed",
+        "cannot_download_file": "Cannot download file",
+        "wait_for_another_download_finish": "Please wait for another download to finish",
+        "file_already_exists_continue": "File already exists, do you want to continue?",
     }
 }
 

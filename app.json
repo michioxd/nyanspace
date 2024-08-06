@@ -2,7 +2,7 @@
   "expo": {
     "name": "nyanspace",
     "slug": "nyanspace",
-    "version": "0.1-cuttingedge.05082024",
+    "version": "0.1-cuttingedge.06082024",
     "orientation": "portrait",
     "icon": "./src/assets/app/icon.png",
     "userInterfaceStyle": "automatic",
@@ -22,7 +22,10 @@
         "foregroundImage": "./src/assets/app/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "versionCode": 13,
+      "permissions": [
+        "android.permission.READ_EXTERNAL_STORAGE"
+      ],
+      "versionCode": 14,
       "package": "ch.michioxd.nyanspace"
     },
     "plugins": [
